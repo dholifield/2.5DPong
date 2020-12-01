@@ -3,6 +3,7 @@ from time import sleep, time
 from random import seed, random
 from pygame.locals import *
 from constants import *
+from shadow import drawShadow
 pygame.mixer.init()
 miss_sound = pygame.mixer.Sound('sounds/hit_miss.wav')
 paddle_sound = pygame.mixer.Sound('sounds/hit_table.wav')
@@ -12,7 +13,7 @@ table_sound = pygame.mixer.Sound('sounds/hit_miss.wav')
 class Ball:
     def __init__(self):
         self.ball = Rect((0,0),BALL_SIZE)
-        self.shaddow = Rect(0,0, 15, 15)
+        self.shadow = Rect(0,0, 15, 15)
 
         self.reset(1)
         self.ball.center = (self.x, self.y)
@@ -101,26 +102,18 @@ class Ball:
         self.possession = 1 - self.possession + 2
     #end
 
-    # Draws the shaddow of the ball
-    def drawShaddow(self, screen):
-        shape_surf = pygame.Surface(pygame.Rect(self.shaddow).size, pygame.SRCALPHA)
-        pygame.draw.rect(shape_surf, SHADDOW, shape_surf.get_rect())
-        screen.blit(shape_surf, self.shaddow)
-    #end
-
     # Renders the ball to the screen
     def render(self, screen):
         if self.count <= 0:
             self.ball.center = (self.x, self.y + (self.z) / 5)
 
             size = 20 - self.z / 25
-            self.shaddow.size = (size, size)
-            self.shaddow.center = (self.x, self.sy)
+            self.shadow.size = (size, size)
+            self.shadow.center = (self.x, self.sy)
         else:
             self.count = self.count - 1
         if abs(CENTER_X - self.x) > TABLE_LENGTH / 2 or abs(CENTER_Y - self.y) < TABLE_WIDTH / 2:
-            self.drawShaddow(screen)
-            #pygame.draw.rect(screen, GRAY, self.shaddow)
+            drawShadow(self.shadow, screen)
         pygame.draw.rect(screen, WHITE, self.ball)
     #end
 #end Ball
