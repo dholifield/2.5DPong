@@ -18,6 +18,11 @@ class Scoreboard:
             ball.reset(ball.possession)
     #end
 
+    # Returns score
+    def score(self):
+        return self.score_one, self.score_two, self.winner()
+    #end
+
     # Adds a point to a player
     def add(self, player):
         if player == 2:

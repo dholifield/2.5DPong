@@ -19,21 +19,22 @@ def main():
 
     # Initializing objects
     ball = Ball()
-    scoreboard = Scoreboard(2)
-    #paddle_one = playerPaddle(PADDLE_X, pygame.K_w, pygame.K_s)
-    #paddle_two = playerPaddle(WIDTH - PADDLE_X, pygame.K_i, pygame.K_k)
-    #paddle_one = cpuPaddle(WIDTH - PADDLE_X, ball , 2)
-    #paddle_two = cpuPaddle(PADDLE_X, ball, 2)
-
-    #paddle_one, paddle_two = mainMenu(ball)
+    scoreboard = Scoreboard(11)
 
     while running:
-        paddle_one, paddle_two = mainMenu(ball, screen)
-        game = Game(ball, scoreboard, paddle_one, paddle_two)
+        paddle_one, paddle_two = mainMenu(screen, ball)
+        if paddle_one != 0:
+            game = Game(ball, scoreboard, paddle_one, paddle_two)
+            winner = game.run(screen);
 
-        scoreboard.reset()
-        winner = game.run(screen);
-        print(winner)
+            if winner[2] == 0:
+                running = False
+            else:
+                sleep(1)
+                running = winMenu(screen, winner)
+        else:
+            running = False
+        #end
     #end
 #end
 

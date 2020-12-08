@@ -17,6 +17,14 @@ class Game():
 
     def run(self, screen):
         running = True
+        winner = 0
+
+        self.ball.reset(1)
+        self.ball.count = 5
+        self.paddle_one.reset()
+        self.paddle_two.reset()
+        self.scoreboard.reset()
+
         while(running):
             t0 = time()
 
@@ -64,6 +72,6 @@ class Game():
                 running = False
             #end
         #end
-        return winner
+        return self.scoreboard.score()
     #end
 #end Game

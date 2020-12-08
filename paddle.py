@@ -11,7 +11,7 @@ class Paddle:
         self.speed = 0
 
         #self.paddle = Rect(0,0, PADDLE_WIDTH, PADDLE_HEIGHT)
-        self.paddle = pygame.image.load('paddle.png')
+        self.paddle = pygame.image.load('images/paddle.png')
         self.shadow = Rect(0,0, 8, 80)
     #end
 
