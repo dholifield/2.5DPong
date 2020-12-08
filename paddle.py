@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from constants import *
+from shadow import drawShadow
 
 class Paddle:
     def __init__(self, x):
@@ -10,8 +11,8 @@ class Paddle:
         self.speed = 0
 
         #self.paddle = Rect(0,0, PADDLE_WIDTH, PADDLE_HEIGHT)
-        self.paddle = pygame.image.load('paddle.png')
-        self.shaddow = Rect(0,0, 8, 80)
+        self.paddle = pygame.image.load('images/paddle.png')
+        self.shadow = Rect(0,0, 8, 80)
     #end
 
     # Resets the paddle position and speed
@@ -20,19 +21,12 @@ class Paddle:
         self.y = CENTER_Y
     #end
 
-    # Draws the shaddow of the paddle
-    def drawShaddow(self, screen):
-        shape_surf = pygame.Surface(pygame.Rect(self.shaddow).size, pygame.SRCALPHA)
-        pygame.draw.rect(shape_surf, SHADDOW, shape_surf.get_rect())
-        screen.blit(shape_surf, self.shaddow)
-    #end
-
     # Renders the paddle to the screen
     def render(self, screen):
         #self.paddle.center = (self.x, self.y + BALL_Z_START / 5)
         #pygame.draw.rect(screen, WHITE, self.paddle)
-        self.shaddow.center = (self.x, self.y - 150)
-        self.drawShaddow(screen)
+        self.shadow.center = (self.x, self.y - 150)
+        drawShadow(self.shadow, screen)
         screen.blit(self.paddle, (self.x - 5, self.y + BALL_Z_START / 5 - 50))
     #end
 #end Paddle
