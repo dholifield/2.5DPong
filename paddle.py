@@ -3,16 +3,19 @@ from pygame.locals import *
 from constants import *
 from shadow import drawShadow
 
+# Paddle Object
 class Paddle:
+    # Preset data for paddles
+    y = CENTER_Y
+    z = 150
+    speed = 0
+
+    paddle = pygame.image.load('images/paddle.png')
+    shadow = Rect(0,0, 8, 80)
+
+    # Initialization of paddle
     def __init__(self, x):
         self.x = x
-        self.y = CENTER_Y
-        self.z = 150
-        self.speed = 0
-
-        #self.paddle = Rect(0,0, PADDLE_WIDTH, PADDLE_HEIGHT)
-        self.paddle = pygame.image.load('images/paddle.png')
-        self.shadow = Rect(0,0, 8, 80)
     #end
 
     # Resets the paddle position and speed
@@ -23,16 +26,15 @@ class Paddle:
 
     # Renders the paddle to the screen
     def render(self, screen):
-        #self.paddle.center = (self.x, self.y + BALL_Z_START / 5)
-        #pygame.draw.rect(screen, WHITE, self.paddle)
         self.shadow.center = (self.x, self.y - 150)
         drawShadow(self.shadow, screen)
         screen.blit(self.paddle, (self.x - 5, self.y + BALL_Z_START / 5 - 50))
     #end
 #end Paddle
 
-
+# Player Paddle Obejct
 class playerPaddle(Paddle):
+    # Initialization of paddle with keybinds
     def __init__(self, x, up_key, down_key):
         super().__init__(x)
         self.up_key = up_key
@@ -58,12 +60,12 @@ class playerPaddle(Paddle):
             else:
                 self.speed = 0
         self.y = self.y + self.speed
-
     #end
 #end playerPaddle
 
-
+# Computer Paddle Object
 class cpuPaddle(Paddle):
+    # Initialization of paddle with difficulty
     def __init__(self, x, ball, difficulty):
         super().__init__(x)
         self.ball = ball
@@ -80,8 +82,10 @@ class cpuPaddle(Paddle):
         elif difficulty == 3:
             # Expert difficulty
             pass
+        #end
     #end
 
+    # Updates the position and speed of the paddle
     def update(self):
         diff = self.y - self.ball.y
         direction = self.ball.x_speed * (self.x - self.ball.x)
@@ -106,6 +110,7 @@ class cpuPaddle(Paddle):
                 self.speed = self.speed - (abs(self.speed) / self.speed) * self.decel
             else:
                 self.speed = 0
+        #end
         self.y = self.y + self.speed
     #end
 #end cpuPaddle

@@ -2,23 +2,26 @@ import pygame
 from pygame.locals import *
 from constants import *
 
+# Scoreboard Object
 class Scoreboard:
-    def __init__(self, max):
-        self.score_one = 0
-        self.score_two = 0
+    # Preset values for a scoreboard
+    score_one = 0
+    score_two = 0
 
+    # Initialization of scoreboard with max score
+    def __init__(self, max):
         self.max = max
     #end
 
     # Counts each time a ball is scored
-    def count(self, ball, paddle_one, paddle_two):
+    def count(self, ball):
         if ball.scored():
             self.add(ball.possession)
             ball.switchPossession()
             ball.reset(ball.possession)
     #end
 
-    # Returns score
+    # Returns the score
     def score(self):
         return self.score_one, self.score_two, self.winner()
     #end
@@ -31,7 +34,7 @@ class Scoreboard:
             self.score_two = self.score_two + 1
     #end
 
-    # Returns 1 or 2 when a player has won
+    # Returns 1 or 2 when a player has won, otherwise 0
     def winner(self):
         winner = 0
 

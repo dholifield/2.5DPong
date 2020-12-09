@@ -9,19 +9,25 @@ miss_sound = pygame.mixer.Sound('sounds/hit_miss.wav')
 paddle_sound = pygame.mixer.Sound('sounds/hit_table.wav')
 table_sound = pygame.mixer.Sound('sounds/hit_miss.wav')
 
-# Class for ping pong ball
+# Ball Object
 class Ball:
-    def __init__(self):
-        self.ball = Rect((0,0),BALL_SIZE)
-        self.shadow = Rect(0,0, 15, 15)
+    # Preset values for a ball
+    ball = Rect((0,0),BALL_SIZE)
+    shadow = Rect(0,0, 15, 15)
 
+    x = BALL_X_START
+    y = CENTER_Y
+
+    ball.center = (x, y)
+    count = 1
+    seed(time)
+
+    # Initialization of ball
+    def __init__(self):
         self.reset(1)
-        self.ball.center = (self.x, self.y)
-        self.count = 1
-        seed(time)
     #end
 
-    # Reset ball position
+    # Reset ball position and speed
     def reset(self, player):
         self.x = BALL_X_START
         self.y = CENTER_Y
@@ -60,6 +66,8 @@ class Ball:
             if abs(diff_x) > TABLE_LENGTH / 2:
                 self.sy = self.sy - 150
         #end
+
+        # Play sound if ball is hit or missed
         if self.count == 1:
             paddle_sound.play()
         elif self.count == 249:
@@ -73,21 +81,25 @@ class Ball:
     #end
 
     # Alter x and y speeds of ball when in contact with a paddle
-    def paddleCollide(self, paddle):
-        x_diff = self.x - paddle.x
-        if abs(x_diff) <= (PADDLE_WIDTH + self.ball.width) / 2:
-            y_diff = self.y - paddle.y
-            if abs(y_diff) <= (PADDLE_HEIGHT + self.ball.height) / 2:
-                self.y_speed = self.y_speed + (y_diff / 50) - paddle.speed / 2
-                self.x_speed = BALL_X_SPEED if x_diff > 0 else -BALL_X_SPEED
-                paddle_sound.play()
+    def paddleCollide(self, paddles):
+        for paddle in paddles:
+            x_diff = self.x - paddle.x
+            if abs(x_diff) <= (PADDLE_WIDTH + self.ball.width) / 2:
+                y_diff = self.y - paddle.y
+                if abs(y_diff) <= (PADDLE_HEIGHT + self.ball.height) / 2:
+                    self.y_speed = self.y_speed + (y_diff / 50) - paddle.speed / 2
+                    self.x_speed = BALL_X_SPEED if x_diff > 0 else -BALL_X_SPEED
+                    paddle_sound.play()
+                #end
+            #end
+        #end
     #end
 
-    # Detects when the point is finished, points are awarded based on current possession
+    # Detects when a point is scored
     def scored(self):
         scored = False
-        # If ball falls of side of table
-        if self.z < 5:
+        # If ball falls off side of table
+        if self.z < BALL_Z_SPEED:
             diff = CENTER_Y - self.y
             if abs(diff) > (TABLE_WIDTH + self.ball.width) / 2:
                 scored = True

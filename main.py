@@ -9,6 +9,7 @@ from menu import *
 from game import *
 from constants import *
 
+# Main function that loops through the menus and game
 def main():
     running = True
 
@@ -21,16 +22,20 @@ def main():
     ball = Ball()
     scoreboard = Scoreboard(11)
 
+    # Main loop, will run until you close the window or force stop the program
     while running:
-        paddle_one, paddle_two = mainMenu(screen, ball)
-        if paddle_one != 0:
-            game = Game(ball, scoreboard, paddle_one, paddle_two)
+        # Calls the main menu and gets paddles
+        paddles = mainMenu(screen, ball)
+        if paddles[0] != 0:
+            # Creates Game object with paddles and runs it
+            game = Game(ball, scoreboard, paddles)
             winner = game.run(screen);
 
             if winner[2] == 0:
                 running = False
             else:
                 sleep(1)
+                # Runs win menu when the game is over, loops back to main menu
                 running = winMenu(screen, winner)
         else:
             running = False
@@ -38,6 +43,7 @@ def main():
     #end
 #end
 
-# Runs main code
+# Runs main code when file is run. Allows main to be accessed elsewhere
 if __name__ == "__main__":
     main()
+#end
