@@ -18,7 +18,7 @@ border = Rect(0,0, SCOREBOARD_WIDTH + 2 * SCOREBOARD_BORDER, SCOREBOARD_HEIGHT +
 scoreboard_line = Rect(0,0, SCOREBOARD_BORDER, SCOREBOARD_HEIGHT + SCOREBOARD_BORDER)
 
 # Renders the background including the ground, the table, and the scoreboard background
-def background_render(screen):
+def drawBackground(screen):
     # Background
     screen.fill(GREEN)
 

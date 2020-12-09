@@ -28,8 +28,7 @@ def main():
         paddles = mainMenu(screen, ball)
         if paddles[0] != 0:
             # Creates Game object with paddles and runs it
-            game = Game(ball, scoreboard, paddles)
-            winner = game.run(screen);
+            winner = game(screen, ball, scoreboard, paddles)
 
             if winner[2] == 0:
                 running = False

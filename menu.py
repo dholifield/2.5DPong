@@ -75,7 +75,7 @@ def mainMenu(screen, ball):
     # Create paddles objects based on user selection
     if mode == 2:
         paddle_one = playerPaddle(PADDLE_X, pygame.K_w, pygame.K_s)
-        paddle_two = playerPaddle(WIDTH - PADDLE_X, pygame.K_i, pygame.K_k)
+        paddle_two = playerPaddle(WIDTH - PADDLE_X, pygame.K_o, pygame.K_k)
     elif mode == 1:
         paddle_one = playerPaddle(PADDLE_X, pygame.K_w, pygame.K_s)
         paddle_two = cpuPaddle(WIDTH - PADDLE_X, ball, difficulty)

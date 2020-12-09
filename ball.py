@@ -74,12 +74,6 @@ class Ball:
             miss_sound.play()
     #end
 
-    # Check paddle collisions for two paddle
-    def paddles(self, paddle_one, paddle_two):
-        self.paddleCollide(paddle_one)
-        self.paddleCollide(paddle_two)
-    #end
-
     # Alter x and y speeds of ball when in contact with a paddle
     def paddleCollide(self, paddles):
         for paddle in paddles:
